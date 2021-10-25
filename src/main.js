@@ -1,22 +1,19 @@
 import App from './App.svelte';
+import config from '../config/nyc-weather';
 import axios from 'axios';
 
-async function getPointsOfWeather() {
-	const url = "https://api.weather.gov/gridpoints/OKX/33,36/forecast";
-	return await axios.get(url).then(parsePointsOfWeather);
-}
-
-function parsePointsOfWeather(rset) {
+const getPointsOfWeather = async () => {
 	const parseData = (data) => {
 		const details = data.detailedForecast;
 		if (!details) return "";
 		return { desc: data.name, details };
 	};
+	const rset = await axios.get(config.url);
 	const properties = rset.data.properties || {};
 	return (properties.periods || []).slice(0, 10).map(parseData);
 }
 
-const getTimeStamp = () => {
+function getTimeStamp() {
 	const date = new Date();
 	const year = date.getFullYear();
 	const month = date.getMonth() + 1;

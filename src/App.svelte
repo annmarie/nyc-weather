@@ -12,7 +12,7 @@
 
 <main>
   {#await pointsOfWeather_promise}
-    <p>loading...</p>
+    <p>Fetching weather forecast for NYC...</p>
   {:then pointsOfWeather}
     <ul>
       {#each pointsOfWeather as pow}
@@ -23,7 +23,7 @@
       {/each}
     </ul>
     <div>
-      <span class="desc">page last updated:</span>
+      <span class="desc">updated at:</span>
       <span>{pageLoadTimeStamp}</span>
     </div>
   {:catch error}
